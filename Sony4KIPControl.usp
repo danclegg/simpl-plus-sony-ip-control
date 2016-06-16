@@ -1,0 +1,458 @@
+/*******************************************************************************************
+  SIMPL+ Module Information
+  (Fill in comments below)
+*******************************************************************************************/
+/*
+System Name: Sony 4K IP Control
+System Number: 1.0
+Programmer: Dan Clegg
+Comments: This Crestron Simpl+ Module is to allow Series 2 processors (and later) to communicate directly with Sony Displays via IP
+*/
+
+/*******************************************************************************************
+  Compiler Directives
+*******************************************************************************************/
+// #ENABLE_DYNAMIC
+#SYMBOL_NAME "Sony4KIPControl"
+// #HINT ""
+// #DEFINE_CONSTANT
+#CATEGORY "46" "Sony Displays"
+
+#DEFINE_CONSTANT	BIGGESTSIZE	65534
+#DEFINE_CONSTANT	NEWLINE	"\n"
+
+#DEFINE_CONSTANT	ActionMenu "AAAAAgAAAMQAAABLAw=="
+#DEFINE_CONSTANT	AD "AAAAAgAAABoAAAA7Aw=="
+#DEFINE_CONSTANT	Analog "AAAAAgAAAHcAAAANAw=="
+#DEFINE_CONSTANT	Analog2 "AAAAAQAAAAEAAAA4Aw=="
+#DEFINE_CONSTANT	AnalogRgb1 "AAAAAQAAAAEAAABDAw=="
+#DEFINE_CONSTANT	Assists "AAAAAgAAAMQAAAA7Aw=="
+#DEFINE_CONSTANT	Audio "AAAAAQAAAAEAAAAXAw=="
+#DEFINE_CONSTANT	AudioMixDown "AAAAAgAAABoAAAA9Aw=="
+#DEFINE_CONSTANT	AudioMixUp "AAAAAgAAABoAAAA8Aw=="
+#DEFINE_CONSTANT	AudioQualityMode "AAAAAgAAAJcAAAB7Aw=="
+#DEFINE_CONSTANT	Blue "AAAAAgAAAJcAAAAkAw=="
+#DEFINE_CONSTANT	BS "AAAAAgAAAJcAAAAsAw=="
+#DEFINE_CONSTANT	BSCS "AAAAAgAAAJcAAAAQAw=="
+#DEFINE_CONSTANT	ChannelDown "AAAAAQAAAAEAAAARAw=="
+#DEFINE_CONSTANT	ChannelUp "AAAAAQAAAAEAAAAQAw=="
+#DEFINE_CONSTANT	ClosedCaption "AAAAAgAAAKQAAAAQAw=="
+#DEFINE_CONSTANT	Component1 "AAAAAgAAAKQAAAA2Aw=="
+#DEFINE_CONSTANT	Component2 "AAAAAgAAAKQAAAA3Aw=="
+#DEFINE_CONSTANT	Confirm "AAAAAQAAAAEAAABlAw=="
+#DEFINE_CONSTANT	CS "AAAAAgAAAJcAAAArAw=="
+#DEFINE_CONSTANT	CursorDown "AAAAAgAAAJcAAABQAw=="
+#DEFINE_CONSTANT	CursorLeft "AAAAAgAAAJcAAABNAw=="
+#DEFINE_CONSTANT	CursorRight "AAAAAgAAAJcAAABOAw=="
+#DEFINE_CONSTANT	CursorUp "AAAAAgAAAJcAAABPAw=="
+#DEFINE_CONSTANT	Ddata "AAAAAgAAAJcAAAAVAw=="
+#DEFINE_CONSTANT	DemoMode "AAAAAgAAAJcAAAB8Aw=="
+#DEFINE_CONSTANT	DemoSurround "AAAAAgAAAHcAAAB7Aw=="
+#DEFINE_CONSTANT	Digital "AAAAAgAAAJcAAAAyAw=="
+#DEFINE_CONSTANT	DigitalToggle "AAAAAgAAAHcAAABSAw=="
+#DEFINE_CONSTANT	Display "AAAAAQAAAAEAAAA6Aw=="
+#DEFINE_CONSTANT	DOT "AAAAAgAAAJcAAAAdAw=="
+#DEFINE_CONSTANT	DpadCenter "AAAAAgAAAJcAAABKAw=="
+#DEFINE_CONSTANT	DUX "AAAAAgAAABoAAABzAw=="
+#DEFINE_CONSTANT	Enter "AAAAAQAAAAEAAAALAw=="
+#DEFINE_CONSTANT	EPG "AAAAAgAAAKQAAABbAw=="
+#DEFINE_CONSTANT	FlashMinus "AAAAAgAAAJcAAAB5Aw=="
+#DEFINE_CONSTANT	FlashPlus "AAAAAgAAAJcAAAB4Aw=="
+#DEFINE_CONSTANT	FootballMode "AAAAAgAAABoAAAB2Aw=="
+#DEFINE_CONSTANT	Forward "AAAAAgAAAJcAAAAcAw=="
+#DEFINE_CONSTANT	GGuide "AAAAAQAAAAEAAAAOAw=="
+#DEFINE_CONSTANT	Green "AAAAAgAAAJcAAAAmAw=="
+#DEFINE_CONSTANT	HDMI1 "AAAAAgAAABoAAABaAw=="
+#DEFINE_CONSTANT	HDMI2 "AAAAAgAAABoAAABbAw=="
+#DEFINE_CONSTANT	HDMI3 "AAAAAgAAABoAAABcAw=="
+#DEFINE_CONSTANT	HDMI4 "AAAAAgAAABoAAABdAw=="
+#DEFINE_CONSTANT	Help "AAAAAgAAAMQAAABNAw=="
+#DEFINE_CONSTANT	Home "AAAAAQAAAAEAAABgAw=="
+#DEFINE_CONSTANT	iManual "AAAAAgAAABoAAAB7Aw=="
+#DEFINE_CONSTANT	Input "AAAAAQAAAAEAAAAlAw=="
+#DEFINE_CONSTANT	Jump "AAAAAQAAAAEAAAA7Aw=="
+#DEFINE_CONSTANT	KeypadDown "AAAAAQAAAAEAAAB1Aw=="
+#DEFINE_CONSTANT	KeypadExit "AAAAAQAAAAEAAABjAw=="
+#DEFINE_CONSTANT	KeypadLeft "AAAAAQAAAAEAAAA0Aw=="
+#DEFINE_CONSTANT	KeypadReturn "AAAAAgAAAJcAAAAjAw=="
+#DEFINE_CONSTANT	KeypadRight "AAAAAQAAAAEAAAAzAw=="
+#DEFINE_CONSTANT	KeypadUp "AAAAAQAAAAEAAAB0Aw=="
+#DEFINE_CONSTANT	Media "AAAAAgAAAJcAAAA4Aw=="
+#DEFINE_CONSTANT	MediaAudioTrack "AAAAAQAAAAEAAAAXAw=="
+#DEFINE_CONSTANT	Mode3D "AAAAAgAAAHcAAABNAw=="
+#DEFINE_CONSTANT	Mute "AAAAAQAAAAEAAAAUAw=="
+#DEFINE_CONSTANT	Netflix "AAAAAgAAABoAAAB8Aw=="
+#DEFINE_CONSTANT	Next "AAAAAgAAAJcAAAA9Aw=="
+#DEFINE_CONSTANT	Num0 "AAAAAQAAAAEAAAAJAw=="
+#DEFINE_CONSTANT	Num1 "AAAAAQAAAAEAAAAAAw=="
+#DEFINE_CONSTANT	Num11 "AAAAAQAAAAEAAAAKAw=="
+#DEFINE_CONSTANT	Num12 "AAAAAQAAAAEAAAALAw=="
+#DEFINE_CONSTANT	Num2 "AAAAAQAAAAEAAAABAw=="
+#DEFINE_CONSTANT	Num3 "AAAAAQAAAAEAAAACAw=="
+#DEFINE_CONSTANT	Num4 "AAAAAQAAAAEAAAADAw=="
+#DEFINE_CONSTANT	Num5 "AAAAAQAAAAEAAAAEAw=="
+#DEFINE_CONSTANT	Num6 "AAAAAQAAAAEAAAAFAw=="
+#DEFINE_CONSTANT	Num7 "AAAAAQAAAAEAAAAGAw=="
+#DEFINE_CONSTANT	Num8 "AAAAAQAAAAEAAAAHAw=="
+#DEFINE_CONSTANT	Num9 "AAAAAQAAAAEAAAAIAw=="
+#DEFINE_CONSTANT	OneTouchTimeRec "AAAAAgAAABoAAABkAw=="
+#DEFINE_CONSTANT	OneTouchView "AAAAAgAAABoAAABlAw=="
+#DEFINE_CONSTANT	Options "AAAAAgAAAJcAAAA2Aw=="
+#DEFINE_CONSTANT	PAP "AAAAAgAAAKQAAAB3Aw=="
+#DEFINE_CONSTANT	Pause "AAAAAgAAAJcAAAAZAw=="
+#DEFINE_CONSTANT	PhotoFrame "AAAAAgAAABoAAABVAw=="
+#DEFINE_CONSTANT	PicOff "AAAAAQAAAAEAAAA+Aw=="
+#DEFINE_CONSTANT	PictureMode "AAAAAQAAAAEAAABkAw=="
+#DEFINE_CONSTANT	PictureOff "AAAAAQAAAAEAAAA+Aw=="
+#DEFINE_CONSTANT	Play "AAAAAgAAAJcAAAAaAw=="
+#DEFINE_CONSTANT	PopUpMenu "AAAAAgAAABoAAABhAw=="
+#DEFINE_CONSTANT	PowerOff "AAAAAQAAAAEAAAAvAw=="
+#DEFINE_CONSTANT	Prev "AAAAAgAAAJcAAAA8Aw=="
+#DEFINE_CONSTANT	Rec "AAAAAgAAAJcAAAAgAw=="
+#DEFINE_CONSTANT	Red "AAAAAgAAAJcAAAAlAw=="
+#DEFINE_CONSTANT	Rewind "AAAAAgAAAJcAAAAbAw=="
+#DEFINE_CONSTANT	ShopRemoteControlForcedDynamic "AAAAAgAAAJcAAABqAw=="
+#DEFINE_CONSTANT	Sleep "AAAAAQAAAAEAAAAvAw=="
+#DEFINE_CONSTANT	SleepTimer "AAAAAQAAAAEAAAA2Aw=="
+#DEFINE_CONSTANT	Stop "AAAAAgAAAJcAAAAYAw=="
+#DEFINE_CONSTANT	SubTitle "AAAAAgAAAJcAAAAoAw=="
+#DEFINE_CONSTANT	SyncMenu "AAAAAgAAABoAAABYAw=="
+#DEFINE_CONSTANT	Teletext "AAAAAQAAAAEAAAA/Aw=="
+#DEFINE_CONSTANT	TenKey "AAAAAgAAAJcAAAAMAw=="
+#DEFINE_CONSTANT	TopMenu "AAAAAgAAABoAAABgAw=="
+#DEFINE_CONSTANT	Tv "AAAAAQAAAAEAAAAkAw=="
+#DEFINE_CONSTANT	Tv_Radio "AAAAAgAAABoAAABXAw=="
+#DEFINE_CONSTANT	TvAnalog "AAAAAQAAAAEAAAA4Aw=="
+#DEFINE_CONSTANT	TvAntennaCable "AAAAAQAAAAEAAAAqAw=="
+#DEFINE_CONSTANT	TvInput "AAAAAQAAAAEAAAAlAw=="
+#DEFINE_CONSTANT	TvPower "AAAAAQAAAAEAAAAVAw=="
+#DEFINE_CONSTANT	TvSatellite "AAAAAgAAAMQAAABOAw=="
+#DEFINE_CONSTANT	Video1 "AAAAAQAAAAEAAABAAw=="
+#DEFINE_CONSTANT	Video2 "AAAAAQAAAAEAAABBAw=="
+#DEFINE_CONSTANT	VolumeDown "AAAAAQAAAAEAAAATAw=="
+#DEFINE_CONSTANT	VolumeUp "AAAAAQAAAAEAAAASAw=="
+#DEFINE_CONSTANT	WakeUp "AAAAAQAAAAEAAAAuAw=="
+#DEFINE_CONSTANT	Wide "AAAAAgAAAKQAAAA9Aw=="
+#DEFINE_CONSTANT	WirelessSubwoofer "AAAAAgAAAMQAAAB+Aw=="
+#DEFINE_CONSTANT	Yellow "AAAAAgAAAJcAAAAnAw=="
+
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+
+/*******************************************************************************************
+  DIGITAL, ANALOG and SERIAL INPUTS and OUTPUTS
+*******************************************************************************************/
+DIGITAL_INPUT clientConnected,SwitchToHDMI1,SwitchToHDMI2,SwitchToHDMI3,SwitchToHDMI4;
+
+BUFFER_INPUT clientBuffer[100];
+
+
+DIGITAL_OUTPUT _clientConnected;
+STRING_OUTPUT Transmit;
+
+/*******************************************************************************************
+  SOCKETS
+  (Uncomment and define socket definitions as needed)
+*******************************************************************************************/
+TCP_CLIENT client[1024];
+
+/*******************************************************************************************
+  Global Variables
+*******************************************************************************************/
+STRING REPORTINGHOST[30],INPUT1[30],INPUT2[30],INPUT3[30],INPUT4[30],INPUT5[30],INPUT6[30],INPUT7[30],COMMAND[20];
+STRING MESSAGE[BIGGESTSIZE];
+INTEGER REPORTINGHOSTPORT;
+
+/*******************************************************************************************
+  Functions
+*******************************************************************************************/
+
+Function Log(string msg)
+{
+	Print("\n%s",msg);
+}
+
+Function Error(string msg)
+{
+	Log(msg);
+}
+
+Function Send(string msg)
+{
+	//Print("Sending: %s",msg);
+	SocketSend(client,msg);
+}
+Function BuildHttpMessage(STRING action)
+{
+	SIGNED_INTEGER dst,mNum,yNum,dNum,ContentLength;
+    SIGNED_LONG_INTEGER PortNumber;
+	STRING timestamp[24];
+	STRING dateStr[24];
+	STRING timeStr[24];
+	STRING header1[1024],header2[1024],header3[1024],header4[1024],header5[1024],header6[1024],header7[1024];
+	STRING innerMsg1[1024],innerMsg2[1024],innerMsg3[1024];
+	STRING CLString[1024];
+	INTEGER spacePosition;
+
+//	_clientConnected = 1;
+
+	mNum = GetMonthNum();
+	yNum = GetYearNum();
+	dNum = GetDateNum();
+
+	dateStr = ITOA(yNum) + "-" + ITOA(mNum) + "-"+ ITOA(dNum);
+	timeStr = Time();
+	dst = GetDST();
+
+	// Change the timestamp depending on DST
+	if(dst = 1) {
+		timestamp = dateStr +"T"+ timeStr + "-0600"; // YYYY-MM-DDTHH:mm:ss.SSS-0000
+	} else if(dst = 2) {
+		timestamp = dateStr +"T"+ timeStr + "-0700"; // YYYY-MM-DDTHH:mm:ss.SSS-0000
+	}
+
+
+	innerMsg1 = "<?xml version=\"1.0\"?><s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><s:Body>";
+	innerMsg2 = "<u:X_SendIRCC xmlns:u=\"urn:schemas-sony-com:service:IRCC:1\">";
+	innerMsg3 = "<IRCCCode>" + action + "</IRCCCode></u:X_SendIRCC></s:Body></s:Envelope>";
+	ContentLength = Len(innerMsg1) + Len(innerMsg2) + Len(innerMsg3);
+	CLString = ITOA(ContentLength);
+
+	header1 = "POST /sony/IRCC/ HTTP/1.1" + NEWLINE;
+	header2 = "Host: " + REPORTINGHOST + ":" + ITOA(REPORTINGHOSTPORT) + NEWLINE;
+//	header3 = "Connection: keep-alive" + NEWLINE;
+	header4 = "Content-Length: " + CLString + NEWLINE;
+	header5 = "Content-type: text/xml" + NEWLINE;
+	header6 = "SOAPACTION: \"urn:schemas-sony-com:service:IRCC:1#X_SendIRCC\"" + NEWLINE;
+	header7 = "X-Auth-PSK: T3CL1T3" + NEWLINE;
+
+	Print("%s",header1);
+	Print("%s",header2);
+//	Print("%s",header3);
+	Print("%s",header4);
+	Print("%s",header5);
+	Print("%s",header6);
+	Print("%s",header7);
+	Print("%s",NEWLINE);
+	Print("%s",innerMsg1);
+	Print("%s",innerMsg2);
+	Print("%s",innerMsg3);
+
+
+	Send(header1);
+	Send(header2);
+//	Send(header3);
+	Send(header4);
+	Send(header5);
+	Send(header6);
+	Send(header7);
+	Send(NEWLINE);
+	Send(innerMsg1);
+	Send(innerMsg2);
+	Send(innerMsg3);
+
+//	_clientConnected = 0;
+
+}
+
+/*******************************************************************************************
+  Event Handlers
+  (Uncomment and declare additional event handlers as needed)
+*******************************************************************************************/
+
+RELEASE SwitchToHDMI1
+{
+	BuildHttpMessage(HDMI1);
+}
+
+RELEASE SwitchToHDMI2
+{
+	BuildHttpMessage(HDMI2);
+}
+
+RELEASE SwitchToHDMI3
+{
+	BuildHttpMessage(HDMI3);
+}
+
+RELEASE SwitchToHDMI4
+{
+	BuildHttpMessage(HDMI4);
+}
+PUSH clientConnected
+{
+ 	SIGNED_INTEGER status; // variable to capture/store socket status
+	status = SocketConnectClient (client, REPORTINGHOST, REPORTINGHOSTPORT, 0); // SocketConnectClient(tcpClient,host,port,reconnect)
+
+	// Status < 0 is an error, greater than is a successful connection
+    if (status < 0)
+        Print("Error connecting socket to address %s on port  %d", REPORTINGHOST, REPORTINGHOSTPORT);
+}
+
+
+//Signal to disconnect socket has been sent
+RELEASE clientConnected
+{
+	SIGNED_INTEGER status;
+	status = SocketDisconnectClient(client);
+
+	if (status < 0)
+		Print("Error disconnecting socket to address %s on port %d",REPORTINGHOST,REPORTINGHOSTPORT);
+}
+
+
+// The SOCKETCONNECT event is called when a socket connection is completed on a TCP_CLIENT or  TCP_SERVER variable.
+/***********
+When using the THREADSAFE keyword before an event (such as PUSH, RELEASE, CHANGE) the event is prevented from retriggering, until the entire code block in the event has executed.
+Events prevented from triggering WILL be dropped.
+************/
+THREADSAFE SOCKETCONNECT client
+{
+	SIGNED_INTEGER LocalStatus,PortNumber;
+	Print("OnConnect: input buffer size is: %d\n", Len(client.SocketRxBuf));
+
+    LocalStatus = SocketGetRemoteIPAddress(client, REPORTINGHOST);
+    PortNumber = SocketGetPortNumber(client);
+
+    if (LocalStatus < 0)
+        Print("Error getting remote ip address. %d\n", LocalStatus);
+	else if (PortNumber < 0)
+        Print("Error getting client port number. %ld\n", REPORTINGHOSTPORT);
+    else
+		Print("OnConnect: Connected to port %ld on address %s\n", REPORTINGHOSTPORT, REPORTINGHOST);
+}
+
+// The SOCKETDISCONNECT event is called when a TCP_CLIENT or  TCP_SERVER socket is disconnected. Determine if this was done remotely (i.e. network, remote server, etc.) or locally via this module
+SOCKETDISCONNECT client
+{
+	if (clientConnected = 0)
+		Print("Socket disconnected remotely");
+	else
+		Print("Local socket disconnect complete.");
+
+	_clientConnected = 1;
+}
+
+// Display the data received from the calls to the client and clear the buffer
+SOCKETRECEIVE client
+{
+    if (Len(client.SocketRxBuf) < 256)
+        Print("Rx: %s", client.SocketRxBuf);
+
+    ClearBuffer(client.SocketRxBuf);
+}
+
+// The SOCKETSTATUS event is called when the status of a TCP_CLIENT or TCP_SERVER socket changes.
+SOCKETSTATUS client
+{
+	SIGNED_INTEGER Status;
+ 	Status = SocketGetStatus();
+    Switch(Status)
+	{
+		case(0):
+		{
+			Log("SOCKET STATUS: Not Connected");
+			//_clientConnected = 0;
+		}
+		case(1):
+		{
+			Log("SOCKET STATUS: Waiting for Connection");
+		}
+		case(2):
+		{
+			Log("SOCKET STATUS: Connected");
+		}
+		case(3):
+		{
+			Log("SOCKET STATUS: Connection Failed");
+			//_clientConnected = 0;
+		}
+		case(4):
+		{
+			Log("SOCKET STATUS: Connection Broken Remotely");
+			//_clientConnected = 0;
+		}
+		case(5):
+		{
+			Log("SOCKET STATUS: Connection Broken Locally");
+			//_clientConnected = 0;
+		}
+		case(6):
+		{
+			Log("SOCKET STATUS: Performing DNS Lookup");
+		}
+		case(7):
+		{
+			Log("SOCKET STATUS: DNS Lookup Failed");
+			//_clientConnected = 0;
+		}
+		case(8):
+		{
+			Log("SOCKET STATUS: DNS Name Resolved");
+		}
+		case(-1):
+		{
+			Log("SOCKET STATUS: Client, Server or UDP variable not a TCP/IP or UDP variable.");
+			//_clientConnected = 0;
+		}
+		case(-2):
+		{
+			Log("SOCKET STATUS: Could not create the connection task");
+			//_clientConnected = 0;
+		}
+		case(-3):
+		{
+			Log("SOCKET STATUS: Could not resolve address");
+			//_clientConnected = 0;
+		}
+		case(-4):
+		{
+			Log("SOCKET STATUS: Port not in range of 0-65535.");
+			//_clientConnected = 0;
+		}
+		case(-5):
+		{
+			Log("SOCKET STATUS: No connection has been established");
+		}
+		case(-6):
+		{
+			Log("SOCKET STATUS: Not enough room in string parameter to hold IP address.");
+			//_clientConnected = 0;
+		}
+		default:
+		{
+			Log("Socket Status Undefined");
+		}
+	};
+}
+
+/*******************************************************************************************
+  Main()
+  Uncomment and place one-time startup code here
+  (This code will get called when the system starts up)
+*******************************************************************************************/
+
+Function Main()
+{
+    // Initialize declared global and local variables/arrays
+
+    // If you are reading any Input or Output variables, uncomment
+    //   the WaitForInitializationComplete statement above and read
+    //   them afterwards.  Input/Output variables will not have
+    //   their correct values set until after the logic processor
+    //   runs and propagates the values to them.
+    WaitForInitializationComplete();
+
+	REPORTINGHOST = "TVHOSTORIP";
+	REPORTINGHOSTPORT = 80;
+	INPUT1 = "";
+	INPUT2 = "";
+	INPUT3 = "";
+	INPUT4 = "";
+	INPUT5 = "";
+	INPUT6 = "";
+	INPUT7 = "";
+	COMMAND = "";
+	_clientConnected = 1;
+
+}
